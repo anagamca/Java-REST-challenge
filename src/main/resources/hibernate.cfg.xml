@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/interview</property>
+        <property name="connection.username">interview_user</property>
+        <property name="connection.password">TheInTeRview</property>
+        <property name="cache.provider_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.jdbc.batch_size">50</property>
+        <property name="hibernate.connection.provider_class">
+            org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+        </property>
+        <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.hikari.minimumIdle">5</property>
+        <property name="hibernate.hikari.maximumPoolSize">10</property>
+        <property name="hibernate.hikari.idleTimeout">30000</property>
+        <property name="hibernate.hikari.driverClassName">org.postgresql.Driver</property>
+        <property name="hibernate.hikari.dataSource.url">jdbc:postgresql://localhost:5432/interview</property>
+        <property name="hibernate.hikari.dataSource.person">interview_user</property>
+        <property name="hibernate.hikari.dataSource.password">TheInTeRview</property>
+        <property name="hibernate.connection.release_mode">after_transaction</property>
+    </session-factory>
+</hibernate-configuration>
