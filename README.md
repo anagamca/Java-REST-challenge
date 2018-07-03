@@ -6,6 +6,7 @@ Take the data from test-resources/people.csv and import it to a singleton in Per
 Finish as many of the TODOs as you can to complete the rest stack/application.
 There are a couple of bonus TODOs lying around so kudos if you get to them. Feel free to add or remove dependencies as you see fit.
 You may also attach other technology or applications that you would like to this application.
+Please include any documentation here in this readme that you would like us to know such as what is complete or not complete and any thoughts around future improvements.
 
 ### Installing Dependencies
 - Install java 1.8
@@ -33,7 +34,7 @@ You may also attach other technology or applications that you would like to this
 ### Project Structure Breakdown:
 - All documentation is set in doc and all java docs can be found in **doc.javadoc**
 - All REST endpoints should reside in **com.interview.core.rest**
-- All Models (not DAOs) should reside in **com.interview.core.models** for all your service and REST needs
+- All Models (not DAOs) should reside in **com.interview.core.models** for all your service and REST needs if you find you need to serialize response objects
 - All DAOs should reside in **com.interview.core.persist.dao** for all your database modelling needs
 - All services should reside in **com.interview.core.services.***
 - All resources including json configuration and external configuration files should reside in **src.main.resources**
