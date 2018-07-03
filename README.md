@@ -1,6 +1,7 @@
 # Interview-Java
 
 ### Description:
+Please fork or download this repo to start.
 Take the data from test-resources/people.csv and import it to a singleton in PersonService.java upon initialization.
 Finish as many of the TODOs as you can to complete the rest stack/application.
 There are a couple of bonus TODOs lying around so kudos if you get to them. Feel free to add or remove dependencies as you see fit.
