@@ -1,24 +1,43 @@
 package com.interview.core.persist.dao;
 
 import com.interview.core.persist.EntityManagerFactory;
+import com.interview.core.persist.dao.people.PersonDao;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
 /**
  * Abstract Base Dao to abstract out the ease of database interaction on any given DAO
  */
 @MappedSuperclass
 public class IdDao extends BaseDao {
-    private static Logger logger = LoggerFactory.getLogger(IdDao.class);
+   
+	private static Logger logger = LoggerFactory.getLogger(IdDao.class);
 
     /**
      * Abstracted Id so that not all DAOs have to implement the generated identifier
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
+    @GeneratedValue(
+        strategy= GenerationType.AUTO, 
+        generator="native"
+    )
+    @GenericGenerator(
+        name = "native", 
+        strategy = "native"
+    )
     private long id;
 
     public long getId() {
@@ -127,4 +146,67 @@ public class IdDao extends BaseDao {
         }
         return obj;
     }
+    
+    /**
+     * Abstract method to retrieve an item by its id
+     * @param id - String id of object
+     * @param clazz - Class of object
+     * @param <T> - Type to return
+     * @return T, the object with class clazz with id of id
+     */
+	public static <T> List<T> findAll(String table, Class<T> clazz) {
+		EntityManager em = EntityManagerFactory.getEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<T> cq = cb.createQuery(clazz);
+		Root<T> rootEntry = cq.from(clazz);
+		CriteriaQuery<T> all = cq.select(rootEntry);
+		TypedQuery<T> allQuery = em.createQuery(all);
+		List<T> allObjects = null;
+		try {
+			allObjects = allQuery.getResultList();
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+			em.close();
+		}
+		return allObjects;
+	}
+	
+	public static <T> List<T> sortByGradeDate(String table, Class<T> clazz, String propertyName) {
+		EntityManager em = EntityManagerFactory.getEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<T> cq = cb.createQuery(clazz);
+		Root<T> rootEntry = cq.from(clazz);
+		cq.orderBy(cb.asc(rootEntry.get(propertyName)));
+		CriteriaQuery<T> all = cq.select(rootEntry);
+		TypedQuery<T> allQuery = em.createQuery(all);
+		List<T> allObjects = null;
+		try {
+			allObjects = allQuery.getResultList();
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+			em.close();
+		}
+		return allObjects;
+	}
+	
+	public static <T> T loadByFieldWithWhereClause(String field, Class<T> clazz, String value) {
+		EntityManager em = EntityManagerFactory.getEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<T> cq = cb.createQuery(clazz);
+		Root<T> rootEntry = cq.from(clazz);
+		cq.select(rootEntry).where(cb.like(rootEntry.get(field), value));
+		TypedQuery<T> query = em.createQuery(cq);
+        T obj = null;
+        try {
+            obj = query.getSingleResult();
+        } catch (Exception e) {
+            logger.error(ExceptionUtils.getStackTrace(e));
+        } finally {
+            em.close();
+        }
+        return obj;
+    }
+	
 }

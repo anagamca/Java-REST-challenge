@@ -1,11 +1,10 @@
 package com.interview.core.persist.mappers;
 
-import com.interview.core.models.Person;
-import com.interview.core.persist.dao.people.PersonDao;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.interview.core.models.Person;
+import com.interview.core.persist.dao.people.PersonDao;
 
 /**
  * This Mapper is to convert the PersonDao to a REST safe model
@@ -18,9 +17,13 @@ public class PersonMapper {
      * @param personList - List of PersonDao
      * @return List, Persons
      */
-    public List<Person> to(List<PersonDao> personList) {
-        throw new NotImplementedException();
-    }
+	public List<Person> to(List<PersonDao> personList) {
+		List<Person> persons = new ArrayList<>();
+		for (PersonDao personDao : personList) {
+			persons.add(to(personDao));
+		}
+		return persons;
+	}
 
     /**
      * TODO: Map PersonDao to Person
@@ -28,12 +31,28 @@ public class PersonMapper {
      * @return Person mapped PersonDao
      */
     public Person to(PersonDao personDao) {
-        throw new NotImplementedException();
+    	if(personDao == null) {
+    		return new Person();
+    	}
+    	Person person = new Person();
+		person.setFirstname(personDao.getFirstName());
+		person.setLastname(personDao.getLastName());
+		person.setGraduationDate(personDao.getGraduationDate());
+		person.setAge(personDao.getAge());
+		return person;
     }
 
-    //TODO implement from
     public PersonDao from(Person person) {
-        throw new NotImplementedException();
+    	if(person == null) {
+    		return new PersonDao();
+    	}
+    	PersonDao personDao = new PersonDao();
+    	personDao.setFirstName(person.getFirstname());
+    	personDao.setLastName(person.getLastname());
+    	personDao.setAge(person.getAge());
+    	personDao.setGitHubAccount(person.getGitHubAccount());
+    	personDao.setGraduationDate(person.getGraduationDate());
+        return personDao;
     }
 
 }

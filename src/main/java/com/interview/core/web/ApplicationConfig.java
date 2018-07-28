@@ -5,6 +5,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * Application initial configuration
  */
@@ -14,6 +15,11 @@ public class ApplicationConfig extends ResourceConfig {
     public ApplicationConfig() {
         this.packages("org.glassfish.jersey.examples.multipart")
                 .register(MultiPartFeature.class);
+        
+        this.packages("com.interview.core.web")
+        .register(new ApplicationBinder());
+       
+        
     }
 
 }

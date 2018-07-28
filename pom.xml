@@ -69,13 +69,6 @@
     </dependency>
     <!--End Time-->
 
-    <!--Persist-->
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>9.4-1200-jdbc41</version>
-    </dependency>
-
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
@@ -98,7 +91,6 @@
       <artifactId>hibernate-ehcache</artifactId>
       <version>5.1.0.Final</version>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-hibernate5</artifactId>
@@ -168,7 +160,6 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
@@ -182,6 +173,12 @@
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-transports-http-jetty</artifactId>
       <version>3.1.5</version>
+       <exclusions>
+       <exclusion>
+         <groupId>org.eclipse.jetty</groupId>
+         <artifactId>jetty-server</artifactId>
+       </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -242,6 +239,12 @@
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-jetty-http</artifactId>
       <version>2.23.2</version>
+      <exclusions>
+       <exclusion>
+         <groupId>org.eclipse.jetty</groupId>
+         <artifactId>jetty-server</artifactId>
+       </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
@@ -292,6 +295,35 @@
       <artifactId>jersey-media-multipart</artifactId>
       <version>2.23.2</version>
     </dependency>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>8.0.11</version>
+	</dependency>
+	 <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-core</artifactId>
+            <version>1.7.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>1.7.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>1.7.3</version>
+            <scope>test</scope>
+        </dependency>
     <!--End Jersey and Jetty-->
 
 
